@@ -32,13 +32,13 @@ class SendGrid:
         # personalizations -> cc
         if cc:
             self.data["personalizations"][0]["cc"] = []
-            addrs = cc if type(cc) == list else [cc]
+            addrs = cc if type(cc) in (list, tuple) else [cc]
             for addr in addrs:
                 self.data["personalizations"][0]["cc"].append({"email": addr})
         # personalizations -> bcc
         if bcc:
             self.data["personalizations"][0]["bcc"] = []
-            addrs = bcc if type(bcc) == list else [bcc]
+            addrs = bcc if type(bcc) in (list, tuple) else [bcc]
             for addr in addrs:
                 self.data["personalizations"][0]["bcc"].append({"email": addr})
 
