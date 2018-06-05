@@ -1,4 +1,6 @@
 import sendgrid
+import base64
+import os
 
 
 class SendGrid:
@@ -20,7 +22,7 @@ class SendGrid:
             }]
         }
 
-    def send(self, to, subject, msg, cc=[], bcc=[]):
+    def send(self, to, subject, msg, cc=[], bcc=[], attachments=[]):
         # personalizations -> to
         addrs = to if type(to) == list else [to]
         for addr in addrs:
@@ -41,6 +43,20 @@ class SendGrid:
             addrs = bcc if type(bcc) in (list, tuple) else [bcc]
             for addr in addrs:
                 self.data["personalizations"][0]["bcc"].append({"email": addr})
+
+        if attachments:
+            self.data["attachments"] = []
+            attachments = attachments if type(attachments) in (list, tuple) \
+                else [attachments]
+            for attachment in attachments:
+                with open(attachment, "rb") as f:
+                    file_content = f.read()
+                    f.close()
+                encoded_file_content = base64.b64encode(file_content).decode()
+                self.data["attachments"].append({
+                    "content": encoded_file_content,
+                    "filename": os.path.split(attachment)[1]
+                })
 
         self.response = self.sg.client.mail.send.post(request_body=self.data)
 
