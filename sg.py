@@ -24,7 +24,8 @@ class SendGrid:
             }]
         }
 
-    def send(self, to, subject, msg, cc=[], bcc=[], attachments=[]):
+    def send(self, to, subject, msg, cc=[], bcc=[], attachments=[],
+             html=False):
         # personalizations -> to
         addrs = to if type(to) == list else [to]
         for addr in addrs:
@@ -33,6 +34,8 @@ class SendGrid:
         self.data["personalizations"][0]["subject"] = subject
         # content -> value
         self.data["content"][0]["value"] = msg
+        if html:
+            self.data["content"][0]["type"] = "text/html"
         # personalizations -> cc
         if cc:
             self.data["personalizations"][0]["cc"] = []
@@ -45,7 +48,7 @@ class SendGrid:
             addrs = bcc if type(bcc) in (list, tuple) else [bcc]
             for addr in addrs:
                 self.data["personalizations"][0]["bcc"].append({"email": addr})
-
+        # attachments
         if attachments:
             self.data["attachments"] = []
             attachments = attachments if type(attachments) in (list, tuple) \
