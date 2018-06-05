@@ -1,6 +1,8 @@
 import sendgrid
 import base64
 import os
+from python_http_client.exceptions import BadRequestsError
+import json
 
 
 class SendGrid:
@@ -55,11 +57,13 @@ class SendGrid:
                 encoded_file_content = base64.b64encode(file_content).decode()
                 self.data["attachments"].append({
                     "content": encoded_file_content,
-                    "filename": os.path.split(attachment)[1]
+                    "filename": os.path.split(attachment)[1],
                 })
 
-        self.response = self.sg.client.mail.send.post(request_body=self.data)
-
-        # print(self.response.status_code)
-        # print(self.response.body)
-        # print(self.response.headers)
+        try:
+            self.sg.client.mail.send.post(request_body=self.data)
+        except BadRequestsError as e:
+            print(e.reason)
+            print(json.loads(e.body)["errors"][0]["message"])
+            print(json.loads(e.body)["errors"][0]["field"])
+            print(json.loads(e.body)["errors"][0]["help"])
