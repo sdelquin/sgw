@@ -1,3 +1,5 @@
 *.pyc
 test.py
 .DS_Store
+/*.egg-info
+/dist/

@@ -1,3 +1,3 @@
-# Sendgrid
+# SGW (SendGrid Wrapper)
 
-Wrapper made in Python for sendgrid-python
+Wrapper made in Python for sendgrid
