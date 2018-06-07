@@ -27,6 +27,7 @@ class SendGrid:
     def send(self, to, subject, msg, cc=[], bcc=[], attachments=[],
              html=False):
         # personalizations -> to
+        self.data["personalizations"][0]["to"] = []
         addrs = to if type(to) == list else [to]
         for addr in addrs:
             self.data["personalizations"][0]["to"].append({"email": addr})
