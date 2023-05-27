@@ -22,4 +22,4 @@ Function `send()` also admits some more parameters:
 - `cc`: as a list of emails for carbon copy.
 - `bcc`: as a list of emails for blind carbon copy.
 - `attachments`: as a list of paths for file attachments.
-- `html`: as a boolean (if True msg will be rendered from html tags).
+- `as_markdown`: as a boolean (if True msg will be rendered from Markdown).
