@@ -3,5 +3,6 @@ test.py
 .DS_Store
 /*.egg-info
 /dist/
+/build/
 .vscode
 .python-version
