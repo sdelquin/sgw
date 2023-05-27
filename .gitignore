@@ -4,3 +4,4 @@ test.py
 /*.egg-info
 /dist/
 .vscode
+.python-version
