@@ -2,6 +2,7 @@ import base64
 import json
 import os
 
+import markdown
 import sendgrid
 from python_http_client.exceptions import BadRequestsError
 
@@ -23,7 +24,7 @@ class SendGrid:
         cc: list = [],
         bcc: list = [],
         attachments: list = [],
-        html: bool = False,
+        as_markdown: bool = False,
     ):
         # personalizations -> to
         self.data["personalizations"][0]["to"] = []
@@ -33,9 +34,10 @@ class SendGrid:
         # personalizations -> subject
         self.data["personalizations"][0]["subject"] = subject
         # content -> value
-        self.data["content"][0]["value"] = msg
-        if html:
+        if as_markdown:
+            msg = markdown.markdown(msg)
             self.data["content"][0]["type"] = "text/html"
+        self.data["content"][0]["value"] = msg
         # personalizations -> cc
         if cc:
             self.data["personalizations"][0]["cc"] = []
