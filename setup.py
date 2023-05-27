@@ -8,5 +8,5 @@ setup(
     author_email="sdelquin@gmail.com",
     description="Wrapper made in Python for sendgrid",
     packages=["sgw"],
-    install_requires=["sendgrid"],
+    install_requires=["sendgrid==5.3.0"],
 )
