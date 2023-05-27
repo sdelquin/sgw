@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="sgw",
-    version="1.1.0",
+    version="1.2.0",
     url="https://github.com/sdelquin/sgw.git",
     author="Sergio Delgado Quintero",
     author_email="sdelquin@gmail.com",

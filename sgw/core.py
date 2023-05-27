@@ -1,31 +1,30 @@
-import sendgrid
 import base64
-import os
-from python_http_client.exceptions import BadRequestsError
 import json
+import os
+
+import sendgrid
+from python_http_client.exceptions import BadRequestsError
 
 
 class SendGrid:
-
-    def __init__(self, apikey, from_addr, from_name):
+    def __init__(self, apikey: str, from_addr: str, from_name: str):
         self.sg = sendgrid.SendGridAPIClient(apikey=apikey)
         self.data = {
-            "personalizations": [{
-                "to": [],
-                "subject": None
-            }],
-            "from": {
-                "email": from_addr,
-                "name": from_name
-            },
-            "content": [{
-                "type": "text/plain",
-                "value": None
-            }]
+            "personalizations": [{"to": [], "subject": None}],
+            "from": {"email": from_addr, "name": from_name},
+            "content": [{"type": "text/plain", "value": None}],
         }
 
-    def send(self, to, subject, msg, cc=[], bcc=[], attachments=[],
-             html=False):
+    def send(
+        self,
+        to: str,
+        subject: str,
+        msg: str,
+        cc: list = [],
+        bcc: list = [],
+        attachments: list = [],
+        html: bool = False,
+    ):
         # personalizations -> to
         self.data["personalizations"][0]["to"] = []
         addrs = to if type(to) == list else [to]
@@ -52,17 +51,18 @@ class SendGrid:
         # attachments
         if attachments:
             self.data["attachments"] = []
-            attachments = attachments if type(attachments) in (list, tuple) \
-                else [attachments]
+            attachments = attachments if type(attachments) in (list, tuple) else [attachments]
             for attachment in attachments:
                 with open(attachment, "rb") as f:
                     file_content = f.read()
                     f.close()
                 encoded_file_content = base64.b64encode(file_content).decode()
-                self.data["attachments"].append({
-                    "content": encoded_file_content,
-                    "filename": os.path.split(attachment)[1],
-                })
+                self.data["attachments"].append(
+                    {
+                        "content": encoded_file_content,
+                        "filename": os.path.split(attachment)[1],
+                    }
+                )
 
         try:
             self.sg.client.mail.send.post(request_body=self.data)
