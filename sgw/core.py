@@ -18,6 +18,7 @@ class SendGrid:
 
     def send(
         self,
+        *,
         to: str,
         subject: str,
         msg: str,
