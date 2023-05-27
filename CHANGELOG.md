@@ -6,6 +6,10 @@ Releases use [Semantic Versioning](https://semver.org/) (`<major>.<minor>.<patch
 
 Released XXXX-XX-XX
 
+## Version 1.2.2
+
+- Force named parameters for `send()`.
+
 ## Version 1.2.1
 
 - Add [justfile](./justfile) to automate operations.

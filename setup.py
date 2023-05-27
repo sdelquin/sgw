@@ -13,7 +13,7 @@ REQUIREMENTS = (
 
 setup(
     name='sgw',
-    version='1.2.1',
+    version='1.2.2',
     url='https://github.com/sdelquin/sgw.git',
     author='Sergio Delgado Quintero',
     author_email='sdelquin@gmail.com',
